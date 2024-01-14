@@ -1,6 +1,8 @@
 # 2048-Pygame
 Proiect Python - echipa F31 - Joc 2048
-#2048 joc Talaban Roxana & Ilie Ana
+Talaban Roxana & Ilie Ana
+
+
 import pygame
 import random
 pygame.init()
