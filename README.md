@@ -1,5 +1,5 @@
 # 2048-Pygame
-Proiect Python - Joc 2048
+#Proiect Python - Joc 2048
 
 
 import pygame
