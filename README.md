@@ -1,14 +1,11 @@
 # 2048-Pygame
 # Proiect Python - Joc 2048
 
-
 import pygame
 import random
 pygame.init()
 
-
-#setari initiale
-
+# setari initiale
 HEIGHT = 500
 WIDTH = 400
 screen = pygame.display.set_mode([WIDTH,HEIGHT])
@@ -18,8 +15,7 @@ fps = 60 #majoritatea jocurilor au viteza de 60fps
 font = pygame.font.Font('freesansbold.ttf',24) #marimea fontului este 24 si aspectul este dat de freesansbold.ttf
 
 
-#2048 librarie de culori intr un dictionar
-
+# 2048 librarie de culori intr un dictionar
 colors = {0: (238, 210,238),
           2: (242, 210, 242),
           4: (210, 202, 236),
@@ -38,8 +34,7 @@ colors = {0: (238, 210,238),
           'bg': (254, 231, 240)}
 
 
-#variabele jocului intr o lista de liste
-
+# variabilele jocului intr o lista de liste
 board_values = [[0 for _ in range(4)] for _ in range(4)] #creearea unui grid de 4x4
 game_over = False
 spawn_new = True
@@ -48,8 +43,7 @@ direction = ''
 score = 0
 
 
-#reinceperea jocului cand am pierdut
-
+# reinceperea jocului dupa ce am pierdut
 def draw_over():
     pygame.draw.rect(screen, 'white', [50,50,300,100], 0, 10)
     game_over_text1 = font.render('Game Over!', True, 'pink')
@@ -58,8 +52,7 @@ def draw_over():
     screen.blit(game_over_text2, (70, 105))
 
 
-#plasarea in funtie de directie
-
+#plasarea in functie de directie
 def take_turn(direc, board):
     global score
     merged = [[False for _ in range(4)] for _ in range(4)]
@@ -81,7 +74,7 @@ def take_turn(direc, board):
                         board[i - shift][j] = 0
                         merged[i - shift - 1][j] = True
 
-    elif direc == 'DOWN':
+elif direc == 'DOWN':
         for i in range(3):
             for j in range(4):
                 shift = 0
@@ -96,11 +89,10 @@ def take_turn(direc, board):
                             and not merged[2 - i + shift][j]:
                         board[3 - i + shift][j] *= 2
                         score+=board[3 - i + shift][j]
-                        
                         board[2 - i + shift][j] = 0
                         merged[3 - i + shift][j] = True
 
-    elif direc == 'LEFT':
+elif direc == 'LEFT':
         for i in range(4):
             for j in range(4):
                 shift = 0
@@ -114,11 +106,10 @@ def take_turn(direc, board):
                         and not merged[i][j - shift]:
                     board[i][j - shift - 1] *= 2
                     score+=board[i][j - shift - 1]
-                    
                     board[i][j - shift] = 0
                     merged[i][j - shift - 1] = True
 
-    elif direc == 'RIGHT':
+elif direc == 'RIGHT':
         for i in range(4):
             for j in range(4):
                 shift = 0
@@ -133,14 +124,13 @@ def take_turn(direc, board):
                             and not merged[i][3 - j + shift]:
                         board[i][4 - j + shift] *= 2
                         score+=board[i][4 - j + shift]
-                       
                         board[i][3 - j + shift] = 0
                         merged[i][4 - j + shift] = True
     return board
-  
 
-#aparitia pieselor la start aleatoriu
-#putem avea 2 sau 4 cu o sansa de 1/10 la aparitia lui 4
+  
+# aparitia pieselor la start aleatoriu
+# putem avea 2 sau 4 cu o sansa de 1/10 la aparitia lui 4
 
 def new_pieces(board):
     count = 0
@@ -150,7 +140,6 @@ def new_pieces(board):
         col= random.randint(0,3)
         if board[row][col] == 0 :
             count += 1
-            
             if random.randint(1,10) == 10:
                 board[row][col] = 4
             else :
@@ -160,8 +149,7 @@ def new_pieces(board):
     return board, full
 
 
-#fundalul tablei jocului
-
+# fundalul tablei jocului
 def draw_board():
     pygame.draw.rect(screen,colors['bg'],[0, 0,400,400], 0,10) #culoarea tablei de joc,dimensiunea tablei
     score_text = font.render(f'Score: {score}' , True, 'blue')
@@ -169,8 +157,7 @@ def draw_board():
     pass 
 
 
-#structura patratelelor
-
+# structura patratelelor
 def draw_pieces(board):
     for i in range(4):
         for j in range(4):
@@ -193,11 +180,9 @@ def draw_pieces(board):
                 screen.blit(value_text, text_rect) #plasarea imiaginii cu patratul ce contine cifra(2,4,...)
                 pygame.draw.rect(screen,'white', [j*95+20, i*95+20, 75,75], 2, 5)
                 
-
     
-#structura principala a jocului
-#am creat afisarea display-ului alb(fundalul) si inchiderea jocului cand se apasa butonul X de iesire
-
+# structura principala a jocului
+# am creat afisarea display-ului alb(fundalul) si inchiderea jocului cand se apasa butonul X de iesire
 run = True
 while run:
     timer.tick(fps)
@@ -215,11 +200,9 @@ while run:
         spawn_new = True
     if game_over:
         draw_over()
-        
-    
-#directia de mutarea patratelelor
 
-    for event in pygame.event.get():
+# directia de mutarea patratelelor
+for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.KEYUP:
@@ -231,8 +214,7 @@ while run:
                  direction = 'LEFT'
             elif event.key == pygame.K_RIGHT :
                  direction = 'RIGHT'
-
-            if game_over:
+          if game_over:
                 if event.key == pygame.K_RETURN:
                     board_values = [[0 for _ in range(4)] for _ in range(4)]
                     spawn_new = True
@@ -240,7 +222,5 @@ while run:
                     score = 0
                     direction = ''
                     game_over = False
-
-
     pygame.display.flip()
 pygame.quit()
