@@ -1,6 +1,5 @@
 # 2048-Pygame
-Proiect Python - echipa F31 - Joc 2048
-Talaban Roxana & Ilie Ana
+Proiect Python - Joc 2048
 
 
 import pygame
